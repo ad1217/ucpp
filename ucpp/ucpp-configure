@@ -135,7 +135,7 @@ function add_deploy_target()
 # Custom targets inserted by ucpp
 
 deploy: \$(PROJECT_TARGETS)
-	wput -u $CPP_PROJECT_NAME/Debug/$CPP_PROJECT_NAME.out ftp://anonymous@$DEPLOY_IP/ni-rt/system/FRC_UserProgram.out
+	wput -u $CPP_PROJECT_NAME/Debug/$CPP_PROJECT_NAME.out ftp://anonymous@$DEPLOY_IP/ni-rt/system/FRC_UserProgram.out&&echo reboot|nc -u -q1 $DEPLOY_IP 6668&&echo "Rebooting cRio..."
 
 undeploy:
 	ftp $DEPLOY_IP < $SCRIPT_INSTALL_DIR/delcode
@@ -158,7 +158,7 @@ EOF
 # Custom targets inserted by ucpp
 
 deploy: \$(PROJECT_TARGETS)
-	ftp $DEPLOY_IP < deploy_code_script
+	ftp $DEPLOY_IP < deploy_code_script&&echo reboot|nc -u -q1 $DEPLOY_IP 6668&&echo "Rebooting cRio..."
 
 undeploy:
 	ftp $DEPLOY_IP < $SCRIPT_INSTALL_DIR/delcode
